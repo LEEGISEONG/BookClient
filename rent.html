@@ -37,7 +37,7 @@
             crossorigin="anonymous"></script>
 
     <!-- Custom styles for this template -->
-    <link href="css/rent.css" rel="stylesheet">
+    <link href="css/list.css" rel="stylesheet">
     <script src ="js/rent.js"></script>
 
 </head>
@@ -53,14 +53,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">도서 대여 및 반납</a>
+            <a class="navbar-brand" href="#">도서 관리 및 검색</a>
+            <ul id="userState"></ul>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
             </ul>
             <span action="#" class="navbar-form navbar-right">
             <input type="text" id="keyword" class="form-control" placeholder="Search..."
-                   onkeyup="searchBook()">
+                   onkeyup="searchBookRent()">
           </span>
         </div>
     </div>
@@ -70,14 +71,16 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">도서 대여 및 반납 <span class="sr-only">(current)</span></a></li>
+                <li ><a href="list.html">도서 검색<span class="sr-only">(current)</span></a></li>
+                <li><a href="_insert.html">도서 추가</a></li>
+                <li><a href="comment.html">서평 검색</a></li>
+                <li class="active"><a href="#">도서 대여</a></li>
+                <li><a href="rentUser.html">사용자 대여상태</a></li>
+            </ul>
 
-            </ul>
-            <ul class="nav navbar-nav">
-            </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Book List</h1>
+            <h1 class="page-header">Book Rent</h1>
 
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -86,9 +89,8 @@
                         <th>이미지</th>
                         <th>제목</th>
                         <th>저자</th>
-                        <th><a href="#" onclick="mySort(this)">가격</a></th>
-                        <th>삭제</th>
-                        <th>수정</th>
+                        <th>대여한 사람</th>
+                        <th>대여상태</th>
                     </tr>
                     </thead>
                     <tbody>

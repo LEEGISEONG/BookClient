@@ -13,9 +13,6 @@ $(document).ready(function() {
 	logout.attr("onclick", "out()")
 	login.attr("onclick","location.href='login.html'");
 
-
-	// alert("로딩 완료");
-
 	$.ajax({
 		url : "http://localhost:7070/book/memberState",
 		type : "GET",
@@ -26,23 +23,16 @@ $(document).ready(function() {
 		},
 		success : function(result){
 
-			//id.text(result);
-			// alert(result.ID);
 			if(result.ID==null){
-				// id.text(result);
-				// state.append(id);
-				// logout.remove();
 				state.append(login)  ;
 				table.append(state);
 				$(location).attr("href", "index.html");
 			}else{
-				// alert(result.ID);
 				userId=result.ID;
 				id.text(result.ID);
 				state.append(id);
 				state.append(logout);
 				table.append(state);
-
 			}
 		},
 		error : function() {
@@ -100,12 +90,7 @@ function searchBook(){
 					var authorTd = $("<td></td>").text(data[i].author);
 					var priceTd = $("<td></td>").text(data[i].price);
 					var comTd = $("<td></td>");
-					var delTd = $("<td></td>");
-					// var infoDiv = $("<div id='infoDiv'></div>");
-					// var infoTa = $("<table id='infoTa'></table>");
-
-					// var commDiv = $("<div id='commDiv'></div>");
-					// var commTa = $("<table id='commTa'></table>");
+					// var delTd = $("<td></td>");
 
 					var comseeBtn = $("<input>");
 					comseeBtn.attr("type", "button");
@@ -122,20 +107,13 @@ function searchBook(){
 					detaBtn.attr("value", "상세보기");
 					detaBtn.attr("id", "detaBtn");
 
-					comTd.append(comseeBtn);
-					comTd.append(comwriteBtn);
 					titleTd.append(detaBtn);
-					// infoDiv.append(infoTa);
-					// titleTd.append(infoDiv);
-
-					// commDiv.append(commTa);
 
 					var delBtn = $("<input>");
 					delBtn.attr("type", "button");
 					delBtn.attr("value", "삭제");
 					delBtn.attr("id", "delBtn");
 
-					delTd.append(delBtn);
 
 					var updateBtn =$("<input>");
 					updateBtn.attr("type", "button")
@@ -150,9 +128,13 @@ function searchBook(){
 
 					$(this).parent().parent().find("#saveBtn").attr("disabled","disabled");
 
+					comTd.append(comseeBtn);
+					comTd.append(comwriteBtn)
+					comTd.append(updateBtn);
+					comTd.append(saveBtn);
+
 					updateBtn.on("click", function(){
 
-						// updateBtn.hide();
 						var title = $(this).parent().parent().find("td:nth-child(2)").text();
 						var author = $(this).parent().parent().find("td:nth-child(3)").text();
 						var price = $(this).parent().parent().find("td:nth-child(4)").text();
@@ -170,24 +152,20 @@ function searchBook(){
 						$(this).parent().parent().find("td:nth-child(4)").text("");
 						$(this).parent().parent().find("td:nth-child(4)").append(priceBox);
 
-						// var tr = $(this).parent().parent();
-
 						$(this).parent().parent().find("#saveBtn").attr("abled","abled");
 						$(this).parent().parent().find("#updateBtn").attr("disabled","disabled");
 					});
 
 
-					var updateTd = $("<td></td>");
-					updateTd.append(updateBtn);
-					updateTd.append(saveBtn);
+
 
 					tr.append(imgTd);
 					tr.append(titleTd);
 					tr.append(authorTd);
 					tr.append(priceTd);
 					tr.append(comTd);
-					tr.append(delTd);
-					tr.append(updateTd);
+					// tr.append(delTd);
+					// tr.append(updateTd);
 					// tr.append(commDiv);
 
 					$("tbody").append(tr);
@@ -448,13 +426,26 @@ $(document).on('click', '#comseeBtn', function () {
 	var isbn = $(this).parent().parent().attr("data-isbn");
 	var tr = $(this).parent().parent();
 
-	var comtr = $("<tr></tr>");
-	var comDiv = $("<div ></div>")
+	var tddd = $("<td colspan='5'></td>");
+	// var comDiv = $("<div ></div>")
 	var comTa = $("<table class='table table-striped'></table>");
+	var comHead = $("<thead></thead>");
+	var comTr=$("<tr></tr>")
+	var titleTh=$("<th></th>").text("제목");
+	var textTh=$("<th></th>").text("내용");
+	var authorTh=$("<th></th>").text("작성자");
+	var dateTh=$("<th></th>").text("작성일");
 
 	var comTb = $("<tbody></tbody>");
 
-
+	comTr.append(titleTh)
+	comTr.append(textTh)
+	comTr.append(authorTh)
+	comTr.append(dateTh)
+	comHead.append(comTr);
+	comTa.append(comHead);
+	tddd.append(comTa)
+	tr.after(tddd);
 
 	$(this).parent().parent().find("#comseeBtn").attr("disabled","disabled");
 
@@ -474,7 +465,7 @@ $(document).on('click', '#comseeBtn', function () {
 				var titleTd = $("<th></th>").text(result[i].title);
 				var textTd = $("<td></td>").text(result[i].text);
 				var authorTd = $("<td></td>").text(result[i].author);
-
+				var saveTd = $("<td></td>")
 
 				var da = result[i].date.split("/")
 
@@ -485,25 +476,24 @@ $(document).on('click', '#comseeBtn', function () {
 				comdelBtn.attr("type", "button");
 				comdelBtn.attr("value", "서평삭제");
 				comdelBtn.attr("id", "comdelBtn");
-				
+				saveTd.append(comdelBtn)
 				commentTr.append(titleTd);
 				commentTr.append(textTd);
 				commentTr.append(authorTd);
 				commentTr.append(dateTd);
-				commentTr.append(comdelBtn);
+				commentTr.append(saveTd);
 
 				comTb.append(commentTr);
 			}
 
 			comTa.append(comTb);
 
-			comDiv.append(comTa)
-			comtr.append(comDiv);
-			tr.after(comtr);
+
+			// comTa.append(comTb);
 
 		},
 		error: function () {
-			alert("상세보기 에러 발생");
+			alert("서평보기 에러 발생");
 		}
 	});
 
@@ -511,17 +501,19 @@ $(document).on('click', '#comseeBtn', function () {
 
 $(document).on('click', '#comdelBtn', function () {
 
-	var isbn = $(this).parent().attr("data-isbn");
-	var id = $(this).parent().attr("cid");
+	var isbn = $(this).parent().parent().attr("data-isbn");
+	var id = $(this).parent().parent().attr("cid");
 
-	var author = $(this).parent().find("td:nth-child(3)").text();
+	var author = $(this).parent().parent().find("td:nth-child(3)").text();
+	// alert(author +"  "+userId);
 
+	// alert(author!=userId)
 	if(author!=userId){
 		alert(userId+"님이 작성한 글이 아닙니다!");
 		return;
 	}
 
-	$(this).parent().remove();
+	$(this).parent().parent().remove();
 
 	$.ajax({
 		url : "http://localhost:7070/book/deleteCommentBook",
@@ -537,6 +529,7 @@ $(document).on('click', '#comdelBtn', function () {
 
 			// alert(result)
 			alert("정상적으로 처리 되었습니다.");
+
 
 		},
 		error : function() {
@@ -566,6 +559,7 @@ $(document).on('click', '#comwriteBtn', function () {
 	var textTd = $("<td></td>");
 	var authorTd = $("<td></td>").text(userId);
 	var dateTd = $("<td></td>").text(da);
+	var saveTd = $("<td></td>")
 
 	alert(commentTr.attr("data-isbn"))
 	var titleIn = $("<input />").attr("type", "text").attr("placeholder","제목");
@@ -581,12 +575,12 @@ $(document).on('click', '#comwriteBtn', function () {
 	comdelBtn.attr("type", "button");
 	comdelBtn.attr("value", "서평저장");
 	comdelBtn.attr("id", "comsaveBtn");
-
+	saveTd.append(comdelBtn)
 	commentTr.append(titleTd);
 	commentTr.append(textTd);
 	commentTr.append(authorTd);
 	commentTr.append(dateTd);
-	commentTr.append(comdelBtn);
+	commentTr.append(saveTd);
 
 	comTb.append(commentTr);
 
@@ -601,12 +595,19 @@ $(document).on('click', '#comwriteBtn', function () {
 
 $(document).on('click', '#comsaveBtn', function () {
 
-	var isbn = $(this).parent().attr("data-isbn");
+	var isbn = $(this).parent().parent().attr("data-isbn");
 	var title = $(this).parent().parent().find("th>input").val();
 	var text = $(this).parent().parent().find("td:nth-child(2)>input").val();
+	var btnTd = $(this).parent().parent().find("td:last");
+	//var saveBtn = $(this).parent().parent().find("td:last>input");
 	var d = new Date();
 	var date = d.getYear()+"/"+d.getMonth()+"/"+d.getDate();
 
+
+	var comdelBtn = $("<input >");
+	comdelBtn.attr("type", "button");
+	comdelBtn.attr("value", "서평삭제");
+	comdelBtn.attr("id", "comdelBtn");
 
 	//alert(isbn+ " "+title +  text+date);
 
@@ -630,7 +631,10 @@ $(document).on('click', '#comsaveBtn', function () {
 			titleTd.text(title);
 			textTd.empty();
 			textTd.text(text);
+			btnTd.empty();
+			// alert(saveBtn.val());
 
+			btnTd.append(comdelBtn);
 
 		},
 		error: function () {

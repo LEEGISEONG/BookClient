@@ -96,6 +96,7 @@ function mySort() {
 function addBook(){
 	$("tbody").empty();
 
+	$("tbody").css("pointer-events", "none");
 
 	var tr = $("<tr></tr>");
 
@@ -178,6 +179,7 @@ $(document).on('click', '#insertBtn', function() {
 var imgArr =[];
 
 function dDrop(){
+	alert($(this).attr("class"));
 	alert("in")
 	var newImg = new Image();
 	var f = event.dataTransfer.files[0];

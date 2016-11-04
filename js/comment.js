@@ -13,9 +13,6 @@ $(document).ready(function() {
 	logout.attr("onclick", "out()")
 	login.attr("onclick","location.href='login.html'");
 
-
-	// alert("로딩 완료");
-
 	$.ajax({
 		url : "http://localhost:7070/book/memberState",
 		type : "GET",
@@ -52,6 +49,7 @@ $(document).ready(function() {
 
 
 });
+
 function out() {
 	$.ajax({
 		url: "http://localhost:7070/book/memberLogout",
@@ -80,7 +78,7 @@ function searchComments(){
 	if(event.keyCode == 13){
 
 		$.ajax({
-			url : "http://localhost:7070/book/bookCommentList",
+			url : "http://localhost:7070/book/bookCommentsList",
 			type : "GET",
 			dataType : "jsonp",
 			jsonp : "callback",
@@ -90,108 +88,39 @@ function searchComments(){
 			success : function(data){
 
 				$("tbody").empty();
+
 				for(var i = 0 ; i < data.length ; i++) {
 
-					var tr = $("<tr></tr>").attr("data-isbn", data[i].isbn);
-					// var tr = $("<tr></tr>").attr("id", data[i].isbn);
-					var img = $("<img />").attr("src", data[i].img);
-					var imgTd = $("<td></td>").append(img);
-					var titleTd = $("<td></td>").text(data[i].title);
+					var tr = $("<tr></tr>");
+					tr.attr("data-isbn", data[i].isbn);
+					tr.attr("cid",data[i].cid);
+					tr.attr("id", "comTr");
+
+					var ctitleTd = $("<td></td>").text(data[i].ctitle);
+					var ctextTd =$("<td></td>").text(data[i].ctext);
 					var authorTd = $("<td></td>").text(data[i].author);
-					var priceTd = $("<td></td>").text(data[i].price);
-					var comTd = $("<td></td>");
+					//var dateTd = $("<td></td>").text(data[i].date);
 					var delTd = $("<td></td>");
-					// var infoDiv = $("<div id='infoDiv'></div>");
-					// var infoTa = $("<table id='infoTa'></table>");
 
-					// var commDiv = $("<div id='commDiv'></div>");
-					// var commTa = $("<table id='commTa'></table>");
-
-					var comseeBtn = $("<input>");
-					comseeBtn.attr("type", "button");
-					comseeBtn.attr("value", "서평보기");
-					comseeBtn.attr("id", "comseeBtn");
-
-					var comwriteBtn = $("<input>");
-					comwriteBtn.attr("type", "button");
-					comwriteBtn.attr("value", "서평작성");
-					comwriteBtn.attr("id", "comwriteBtn");
-
-					var detaBtn = $("<input>");
-					detaBtn.attr("type", "button");
-					detaBtn.attr("value", "상세보기");
-					detaBtn.attr("id", "detaBtn");
-
-					comTd.append(comseeBtn);
-					comTd.append(comwriteBtn);
-					titleTd.append(detaBtn);
-					// infoDiv.append(infoTa);
-					// titleTd.append(infoDiv);
-
-					// commDiv.append(commTa);
+					var da = data[i].date.split("/")
+					var dateTd = $("<td></td>").text(Number(da[0])+1900+"/"+(Number(da[1])+1)+"/"+Number(da[2]));
 
 					var delBtn = $("<input>");
 					delBtn.attr("type", "button");
 					delBtn.attr("value", "삭제");
-					delBtn.attr("id", "delBtn");
+					delBtn.attr("id", "comdelBtn");
 
 					delTd.append(delBtn);
 
-					var updateBtn =$("<input>");
-					updateBtn.attr("type", "button")
-					updateBtn.attr("value","수정");
-					updateBtn.attr("id", "updateBtn");
-
-
-					var saveBtn =$("<input>");
-					saveBtn.attr("type", "button")
-					saveBtn.attr("value","저장");
-					saveBtn.attr("id", "saveBtn");
-
-					$(this).parent().parent().find("#saveBtn").attr("disabled","disabled");
-
-					updateBtn.on("click", function(){
-
-						// updateBtn.hide();
-						var title = $(this).parent().parent().find("td:nth-child(2)").text();
-						var author = $(this).parent().parent().find("td:nth-child(3)").text();
-						var price = $(this).parent().parent().find("td:nth-child(4)").text();
-
-						var titleBox =$("<input />").attr("type", "text").attr("id", "title").val(title);
-						var authorBox =$("<input />").attr("type", "text").val(author);
-						var priceBox =$("<input />").attr("type", "text").val(price);
-
-						$(this).parent().parent().find("td:nth-child(2)").text("");
-						$(this).parent().parent().find("td:nth-child(2)").append(titleBox);
-
-						$(this).parent().parent().find("td:nth-child(3)").text("");
-						$(this).parent().parent().find("td:nth-child(3)").append(authorBox);
-
-						$(this).parent().parent().find("td:nth-child(4)").text("");
-						$(this).parent().parent().find("td:nth-child(4)").append(priceBox);
-
-						// var tr = $(this).parent().parent();
-
-						$(this).parent().parent().find("#saveBtn").attr("abled","abled");
-						$(this).parent().parent().find("#updateBtn").attr("disabled","disabled");
-					});
-
-
-					var updateTd = $("<td></td>");
-					updateTd.append(updateBtn);
-					updateTd.append(saveBtn);
-
-					tr.append(imgTd);
-					tr.append(titleTd);
+					tr.append(ctitleTd);
+					tr.append(ctextTd);
 					tr.append(authorTd);
-					tr.append(priceTd);
-					tr.append(comTd);
+					tr.append(dateTd)
 					tr.append(delTd);
-					tr.append(updateTd);
-					// tr.append(commDiv);
 
 					$("tbody").append(tr);
 				}
+
 			},
 			error : function(){
 				alert("이상하네 ")
@@ -220,7 +149,9 @@ function mySort() {
 
 
 // $(document).on('click', '#addBtn', function() {
+/*
 function addBook(){
+
 	$("tbody").empty();
 
 
@@ -260,6 +191,8 @@ function addBook(){
 
 // });
 }
+*/
+/*
 $(document).on('click', '#insertBtn', function() {
 	var isbn = $(this).parent().parent().find("td:nth-child(2)>input").val();
 	var title = $(this).parent().parent().find("td:nth-child(3)>input").val();
@@ -291,7 +224,8 @@ $(document).on('click', '#insertBtn', function() {
 		}
 	});
 });
-
+*/
+/*
 $(document).on('click', '#saveBtn', function() {
 
 	var isbn = $(this).parent().parent().attr("data-isbn");
@@ -337,7 +271,8 @@ $(document).on('click', '#saveBtn', function() {
 
 
 });
-
+*/
+/*
 $(document).on('click', '#delBtn', function() {
 
 	var isbn = $(this).parent().parent().attr("data-isbn");
@@ -366,7 +301,8 @@ $(document).on('click', '#delBtn', function() {
 	// $(this).parent().parent().find("#updateBtn").attr("disabled","disabled");
 
 });
-
+*/
+/*
 $(document).on('click', '#detaBtn', function () {
 
 	var ta = $(this).parent().parent().find("td:nth-child(2)");
@@ -407,8 +343,6 @@ $(document).on('click', '#detaBtn', function () {
 			var publishertiTd = $("<th></th>").text("출판사");
 			var publisherTd = $("<td></td>").text(result.publisher);
 
-			// var t = $("#dt").text();
-
 
 				dateTr.append(datetiTd);
 				dateTr.append(dateTd);
@@ -442,8 +376,9 @@ $(document).on('click', '#detaBtn', function () {
 		}
 	});
 });
-
-var commentGo= false;
+*/
+////////////// 하지만 곧 쓸꺼임
+/*
 $(document).on('click', '#comseeBtn', function () {
 
 	var isbn = $(this).parent().parent().attr("data-isbn");
@@ -504,20 +439,22 @@ $(document).on('click', '#comseeBtn', function () {
 	});
 
 });
+*/
 
 $(document).on('click', '#comdelBtn', function () {
 
-	var isbn = $(this).parent().attr("data-isbn");
-	var id = $(this).parent().attr("cid");
+	var isbn = $(this).parent().parent().attr("data-isbn");
+	var id = $(this).parent().parent().attr("cid");
 
-	var author = $(this).parent().find("td:nth-child(3)").text();
+	var author = $(this).parent().parent().find("td:nth-child(3)").text();
 
+	alert(author+" / "+userId)
 	if(author!=userId){
 		alert(userId+"님이 작성한 글이 아닙니다!");
 		return;
 	}
 
-	$(this).parent().remove();
+	$(this).parent().parent().remove();
 
 	$.ajax({
 		url : "http://localhost:7070/book/deleteCommentBook",
@@ -529,11 +466,7 @@ $(document).on('click', '#comdelBtn', function () {
 			id : id
 		},
 		success : function(result){
-
-
-			// alert(result)
 			alert("정상적으로 처리 되었습니다.");
-
 		},
 		error : function() {
 			alert("삭제 에러 발생");
@@ -541,60 +474,7 @@ $(document).on('click', '#comdelBtn', function () {
 	});
 });
 
-$(document).on('click', '#comwriteBtn', function () {
-
-	var d = new Date();
-	var da = (d.getYear()+1900)+". "+d.getMonth()+". "+d.getDate();
-	var isbn = $(this).parent().attr("data-isbn");
-	var tr = $(this).parent().parent();
-
-	// var id = $(this).parent().attr("cid");
-	var author = $(this).parent().find("td:nth-child(3)").text();
-
-	var comtr = $("<tr></tr>");
-	var comDiv = $("<div ></div>")
-	var comTa = $("<table class='table table-striped'></table>");
-
-	var comTb = $("<tbody></tbody>");
-
-	var commentTr = $("<tr></tr>").attr("data-isbn", isbn);
-	var titleTd = $("<th></th>");
-	var textTd = $("<td></td>");
-	var authorTd = $("<td></td>").text(userId);
-	var dateTd = $("<td></td>").text(da);
-
-
-	var titleIn = $("<input />").attr("type", "text").attr("placeholder","제목");
-	var textIn = $("<input />").attr("type", "text").attr("placeholder", "내용");
-	// var authorIn = $("<input />").attr("type", "text");
-	// var priceIn = $("<input />").attr("type", "text");
-	//var saveBtn = $("<input />").attr("type", "button").attr("value","저장").attr("id","insertBtn");
-
-	titleTd.append(titleIn);
-	textTd.append(textIn)
-
-	var comdelBtn = $("<input >");
-	comdelBtn.attr("type", "button");
-	comdelBtn.attr("value", "서평저장");
-	comdelBtn.attr("id", "comsaveBtn");
-
-	commentTr.append(titleTd);
-	commentTr.append(textTd);
-	commentTr.append(authorTd);
-	commentTr.append(dateTd);
-	commentTr.append(comdelBtn);
-
-	comTb.append(commentTr);
-
-	comTa.append(comTb);
-
-	comDiv.append(comTa)
-	comtr.append(comDiv);
-	tr.after(comtr);
-
-
-});
-
+/*
 $(document).on('click', '#comsaveBtn', function () {
 
 
@@ -613,6 +493,95 @@ $(document).on('click', '#comsaveBtn', function () {
 		},
 		error: function () {
 			alert("상세보기 에러 발생");
+		}
+	});
+});
+*/
+
+$(document).on('click', '#comTr', function () {
+	// alert($(this).attr("data-isbn") +" / " + $(this).attr("cid"))
+
+	var isbn = $(this).attr("data-isbn");
+	var thTr = $(this);
+	var infoTableTr = $("<tr></tr>")
+	var infoTd =  $("<td colspan='5'></td>")
+	var infoTable = $("<table class='table table-striped'></table>");
+	var infoHead = $("<thead></thead>");
+	var infoTr=$("<tr></tr>")
+	var img=$("<img>")
+	var imgTh=$("<th></th>").text("이미지");
+	var titleTh=$("<th></th>").text("제목");
+	var authorTh=$("<th></th>").text("저자");
+	var priceTh=$("<th></th>").text("가격");
+	var closeTh = $("<th></th>").text("닫기");
+
+	var infoTbody = $("<tbody></tbody>");
+
+	infoTr.append(imgTh);
+	infoTr.append(titleTh);
+	infoTr.append(authorTh);
+	infoTr.append(priceTh);
+	infoTr.append(closeTh);
+
+	infoHead.append(infoTr);
+
+	infoTable.append(infoHead);
+	infoTable.append(infoTbody);
+
+
+	infoTd.append(infoTable);
+	infoTableTr.append(infoTd)
+	thTr.after(infoTableTr);
+
+
+	$.ajax({
+		url : "http://localhost:7070/book/bookInfo",
+		type : "GET",
+		dataType : "jsonp",
+		jsonp : "callback",
+		data : {
+			isbn : isbn
+		},
+		success : function(data){
+
+			var tr = $("<tr ></tr>").attr("data-isbn", data.isbn);
+			var tdTd = $("<td colspan='5'></td>");
+			var img = $("<img />").attr("src", data.img);
+			var imgTd = $("<td></td>").append(img);
+			var titleTd = $("<td></td>").text(data.title);
+			var authorTd = $("<td></td>").text(data.author);
+			var priceTd = $("<td></td>").text(data.price);
+			var closeTd = $("<td></td>");
+
+			var closeBtn = $("<input>");
+			closeBtn.attr("type", "button");
+			closeBtn.attr("value", "닫기");
+			closeBtn.on("click", function(){
+				$(this).parent().parent().parent().parent().parent().remove();
+
+			});
+
+
+			closeTd.append(closeBtn);
+
+			imgTd.append(img);
+			// titleTd.append(img);
+			// authorTd.append(img);
+			// priceTd.append(img);
+			// closeTd.append(img);
+
+
+			tr.append(imgTd);
+			tr.append(titleTd);
+			tr.append(authorTd);
+			tr.append(priceTd);
+			tr.append(closeTd);
+
+			tdTd.append(tr);
+			infoTbody.append(tdTd);
+		},
+		error : function(){
+			alert("이상하네 ")
 		}
 	});
 });

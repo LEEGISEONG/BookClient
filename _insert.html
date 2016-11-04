@@ -69,14 +69,16 @@
     </div>
 </nav>
 
-<div class="container-fluid">
-    <div class="row">
+<div class="container-fluid" ondrop="dDrop()">
+    <div class="row" ondrop="dDrop()">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
 
                 <li><a href="list.html">도서 검색</a></li>
                 <li class="active"><a href="#">도서 추가<span class="sr-only">(current)</span></a></li>
                 <li><a href="comment.html">서평 검색</a></li>
+                <li><a href="rent.html">도서 대여</a></li>
+                <li><a href="rentUser.html">사용자 대여상태</a></li>
 
             </ul>
 
@@ -84,8 +86,8 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">Book Add</h1>
 
-            <div class="table-responsive">
-                <table class="table table-striped">
+            <div class="table-responsive"  ondrop="dDrop()">
+                <table class="table table-striped"  ondrop="dDrop()">
                     <thead>
                     <tr>
                         <th>이미지</th>

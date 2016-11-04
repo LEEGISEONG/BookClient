@@ -28,11 +28,16 @@ $(document).ready(function() {
 				table.append(state);
 				$(location).attr("href", "index.html");
 			}else{
+
+
 				userId=result.ID;
-				id.text(result.ID);
+				$("#whos").text(userId+"'s Book List")
+				id.text(userId);
 				state.append(id);
 				state.append(logout);
 				table.append(state);
+
+				searchUserRent(userId);
 			}
 		},
 		error : function() {
@@ -65,17 +70,27 @@ function out() {
 	});
 }
 
-function searchBookRent(){
+function searchUserRent(user){
 
-	if(event.keyCode == 13){
+	var useruser;
+	var isSearch = false;
+	if(user==null){
+		useruser =$("#keyword").val();
+	}else{
+		alert("dd");
+		useruser=user;
+		isSearch=true;
+	}
 
+	if((event.keyCode == 13)||isSearch){
+		isSearch = false;
 		$.ajax({
-			url : "http://localhost:7070/book/rentList",
+			url : "http://localhost:7070/book/rentUserBook",
 			type : "GET",
 			dataType : "jsonp",
 			jsonp : "callback",
 			data : {
-				keyword : $("#keyword").val()
+				keyword : useruser
 			},
 			success : function(data){
 
@@ -83,33 +98,24 @@ function searchBookRent(){
 				for(var i = 0 ; i < data.length ; i++) {
 
 					var tr = $("<tr></tr>").attr("data-isbn", data[i].isbn);
-					// var tr = $("<tr></tr>").attr("id", data[i].isbn);
 					var img = $("<img />").attr("src", data[i].img);
 					var imgTd = $("<td></td>").append(img);
 					var titleTd = $("<td></td>").text(data[i].title);
 					var authorTd = $("<td></td>").text(data[i].author);
-					var whoTd = $("<td></td>").text(data[i].rent);
 					var rentTd = $("<td></td>");
-					// var delTd = $("<td></td>");
 
-					if(data[i].rent==null){
-						var rentBtn = $("<input>");
-						rentBtn.attr("type", "button");
-						rentBtn.attr("value", "대여하기");
-						rentBtn.attr("id", "rentBtn");
-						rentTd.append(rentBtn);
-					}else{
-						var returnBtn = $("<input>");
-						returnBtn.attr("type", "button");
-						returnBtn.attr("value", "대여중 반납");
-						returnBtn.attr("id", "returnBtn");
-						rentTd.append(returnBtn);
-					}
+
+					var returnBtn = $("<input>");
+					returnBtn.attr("type", "button");
+					returnBtn.attr("value", "반납하기");
+					returnBtn.attr("id", "returnBtn");
+					rentTd.append(returnBtn);
+
 
 					tr.append(imgTd);
 					tr.append(titleTd);
 					tr.append(authorTd);
-					tr.append(whoTd);
+					// tr.append(whoTd);
 					tr.append(rentTd);
 
 					$("tbody").append(tr);
@@ -123,7 +129,6 @@ function searchBookRent(){
 }
 
 
-
 $(document).on('click', '#returnBtn', function () {
 
 	var isbn = $(this).parent().parent().attr("data-isbn");
@@ -134,8 +139,9 @@ $(document).on('click', '#returnBtn', function () {
 	rentBtn.attr("value", "대여하기");
 	rentBtn.attr("id", "rentBtn");
 
-	var nowTd = $(this).parent().parent().find("td:nth-child(4)");
-	var stateTd = $(this).parent().parent().find("td:nth-child(5)");
+	var trtr =$(this).parent().parent();
+	var nowTd = trtr.find("td:nth-child(4)");
+	var stateTd = trtr.find("td:nth-child(5)");
 
 	$.ajax({
 		url: "http://localhost:7070/book/returnBook",
@@ -148,10 +154,7 @@ $(document).on('click', '#returnBtn', function () {
 		},
 		success: function (result) {
 
-			nowTd.text("");
-
-			stateTd.empty();
-			stateTd.append(rentBtn);
+			trtr.remove()
 			alert("반납 성공")
 		},
 		error: function () {
@@ -185,14 +188,12 @@ $(document).on('click', '#rentBtn', function () {
 			isbn : isbn
 		},
 		success: function (result) {
-			if (result) {
-				nowTd.text(userId);
-				stateTd.empty();
-				stateTd.append(returnBtn);
-				alert("대여 성공")
-			}else{
-				alert("대여 권수가 초과했습니다.")
-			}
+
+			nowTd.text(userId);
+
+			stateTd.empty();
+			stateTd.append(returnBtn);
+			alert("대여 성공")
 		},
 		error: function () {
 			alert("대여 에러 발생");
