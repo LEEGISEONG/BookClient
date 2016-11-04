@@ -38,7 +38,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/list.css" rel="stylesheet">
-    <script src ="js/list.js"></script>
+    <script src ="js/insert.js"></script>
 
 </head>
 
@@ -54,14 +54,15 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">도서 관리 및 검색</a>
-            <ul id="userState"></ul>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
             </ul>
             <span action="#" class="navbar-form navbar-right">
-            <input type="text" id="keyword" class="form-control" placeholder="Search..."
+           <!-- <input type="text" id="keyword" class="form-control" placeholder="Search..."
                    onkeyup="searchBook()">
+
+                   -->
           </span>
         </div>
     </div>
@@ -71,35 +72,27 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">도서검색 <span class="sr-only">(current)</span></a></li>
-                <li><a href="_insert.html">도서 추가</a></li>
-                <li><a href="comment.html">서평 검색</a></li>
+                <li class="active"><a href="#">도서 추가<span class="sr-only">(current)</span></a></li>
+                <li><a href="list.html">도서 검색</a></li>
             </ul>
 
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Book List</h1>
+            <h1 class="page-header">Book Add</h1>
 
             <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>이미지</th>
-
-                        <th>제목</th>
-                        <th>저자</th>
-                        <th><a href="#" onclick="mySort(this)">가격</a></th>
-                        <th>서평</th>
-                        <th>삭제</th>
-                        <th>수정</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-
-                    </tbody>
-                </table>
             </div>
+
+            <div ondragenter="return false"
+                 ondragover="return false"
+                 ondrop="dDrop()"
+                 id = "imgIn">
+            </div><br>
+            <input type="text" id="isbn" placeholder="isbn">
+            <input type="text" id="title" placeholder="책제목">
+            <input type="text" id="price" placeholder="책가격">
+            <input type="button" onclick="addBook()" value="추가">
+
         </div>
     </div>
 </div>

@@ -75,12 +75,12 @@ function out() {
 	});
 }
 
-function searchBook(){
+function searchComments(){
 
 	if(event.keyCode == 13){
 
 		$.ajax({
-			url : "http://localhost:7070/book/bookList",
+			url : "http://localhost:7070/book/bookCommentList",
 			type : "GET",
 			dataType : "jsonp",
 			jsonp : "callback",
@@ -443,6 +443,7 @@ $(document).on('click', '#detaBtn', function () {
 	});
 });
 
+var commentGo= false;
 $(document).on('click', '#comseeBtn', function () {
 
 	var isbn = $(this).parent().parent().attr("data-isbn");
@@ -474,13 +475,7 @@ $(document).on('click', '#comseeBtn', function () {
 				var titleTd = $("<th></th>").text(result[i].title);
 				var textTd = $("<td></td>").text(result[i].text);
 				var authorTd = $("<td></td>").text(result[i].author);
-
-
-				var da = result[i].date.split("/")
-
-				// alert(Number(da[0])+1900+"/"+(Number(da[1])+1)+"/"+Number(da[2]));
-
-				var dateTd = $("<td></td>").text(Number(da[0])+1900+"/"+(Number(da[1])+1)+"/"+Number(da[2]));
+				var dateTd = $("<td></td>").text(result[i].date);
 				var comdelBtn = $("<input >");
 				comdelBtn.attr("type", "button");
 				comdelBtn.attr("value", "서평삭제");
@@ -501,6 +496,7 @@ $(document).on('click', '#comseeBtn', function () {
 			comtr.append(comDiv);
 			tr.after(comtr);
 
+			commentGo=true;
 		},
 		error: function () {
 			alert("상세보기 에러 발생");
@@ -548,8 +544,8 @@ $(document).on('click', '#comdelBtn', function () {
 $(document).on('click', '#comwriteBtn', function () {
 
 	var d = new Date();
-	var da = (d.getYear()+1900)+"/"+(d.getMonth()+1)+"/"+d.getDate();
-	var isbn = $(this).parent().parent().attr("data-isbn");
+	var da = (d.getYear()+1900)+". "+d.getMonth()+". "+d.getDate();
+	var isbn = $(this).parent().attr("data-isbn");
 	var tr = $(this).parent().parent();
 
 	// var id = $(this).parent().attr("cid");
@@ -567,7 +563,7 @@ $(document).on('click', '#comwriteBtn', function () {
 	var authorTd = $("<td></td>").text(userId);
 	var dateTd = $("<td></td>").text(da);
 
-	alert(commentTr.attr("data-isbn"))
+
 	var titleIn = $("<input />").attr("type", "text").attr("placeholder","제목");
 	var textIn = $("<input />").attr("type", "text").attr("placeholder", "내용");
 	// var authorIn = $("<input />").attr("type", "text");
@@ -601,36 +597,18 @@ $(document).on('click', '#comwriteBtn', function () {
 
 $(document).on('click', '#comsaveBtn', function () {
 
-	var isbn = $(this).parent().attr("data-isbn");
-	var title = $(this).parent().parent().find("th>input").val();
-	var text = $(this).parent().parent().find("td:nth-child(2)>input").val();
-	var d = new Date();
-	var date = d.getYear()+"/"+d.getMonth()+"/"+d.getDate();
 
-
-	//alert(isbn+ " "+title +  text+date);
-
-	var  textTd= $(this).parent().parent().find("td:nth-child(2)")
-	var  titleTd= $(this).parent().parent().find("th")
 	$.ajax({
-		url: "http://localhost:7070/book/bookcommentInsert",
+		url: "http://localhost:7070/book/bookComments",
 		type: "GET",
 		dataType: "jsonp",
 		jsonp: "callback",
 		data: {
 			isbn: isbn,
 			title: title,
-			text: text,
-			author : userId,
-			date : date
+			text: text
 		},
 		success: function (result) {
-
-			titleTd.empty();
-			titleTd.text(title);
-			textTd.empty();
-			textTd.text(text);
-
 
 		},
 		error: function () {

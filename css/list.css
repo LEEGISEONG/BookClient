@@ -11,7 +11,12 @@ body {
 /*
  * Global add-ons
  */
-
+#imgIn{
+  width : 149px;
+  height : 100px;
+  background-color: yellow;
+  margin: 0 auto;
+ }
 .sub-header {
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;

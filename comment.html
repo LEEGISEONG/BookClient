@@ -38,7 +38,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/list.css" rel="stylesheet">
-    <script src ="js/list.js"></script>
+    <script src ="js/comment.js"></script>
 
 </head>
 
@@ -61,7 +61,7 @@
             </ul>
             <span action="#" class="navbar-form navbar-right">
             <input type="text" id="keyword" class="form-control" placeholder="Search..."
-                   onkeyup="searchBook()">
+                   onkeyup="searchComments()">
           </span>
         </div>
     </div>
@@ -71,14 +71,14 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">도서검색 <span class="sr-only">(current)</span></a></li>
+                <li><a href="list.html">도서검색 <span class="sr-only">(current)</span></a></li>
                 <li><a href="_insert.html">도서 추가</a></li>
-                <li><a href="comment.html">서평 검색</a></li>
+                <li class="active"><a href="#">서평 검색</a></li>
             </ul>
 
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Book List</h1>
+            <h1 class="page-header">Comments List</h1>
 
             <div class="table-responsive">
                 <table class="table table-striped">
