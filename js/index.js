@@ -19,11 +19,12 @@ $(document).ready(function() {
         success : function(result){
 
             if(result.ID==null){
-                userState.text("LogIn").attr("onclick","location.href='login.html'");
-                $("#dropdown-menu").hide();
+               // userState.text("LogIn").attr("onclick","location.href='login.html'");
+                $("#userli").hide();
             }else{
 
                 userState.text(result.ID);
+                $("#login").hide();
 
             }
         },
@@ -45,9 +46,9 @@ function out() {
             id: "id"
         },
         success: function (result) {
-            userState.text("LogIn").attr("onclick","location.href='login.html'");
-            $("#dropdown-menu").hide();
-            $(location).attr("href", "index.html");
+           // userState.text("LogIn").attr("onclick","location.href='login.html'");
+            $("#userli").hide();
+            $("#login").show();
         },
         error: function () {
             alert("로그아웃 상태 에러 발생");
