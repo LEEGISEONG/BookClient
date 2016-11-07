@@ -17,8 +17,7 @@ $(document).ready(function() {
 		success : function(result){
 
 			if(result.ID==null){
-				userState.text("LogIn").attr("onclick","location.href='login.html'");
-				$("#dropdown-menu").hide();
+				$(location).attr("href", "index.html");
 			}else{
 				userId =result.ID;
 				userState.text(userId);
@@ -72,7 +71,7 @@ function searchBookRent(){
 				for(var i = 0 ; i < data.length ; i++) {
 
 					var tr = $("<tr></tr>").attr("data-isbn", data[i].isbn);
-					var img = $("<img />").attr("src", data[i].img);
+					var img = $("<img width='145' height='199' />").attr("src", data[i].img);
 					var imgTd = $("<td></td>").append(img);
 					var titleTd = $("<td></td>").text(data[i].title);
 					var authorTd = $("<td></td>").text(data[i].author);

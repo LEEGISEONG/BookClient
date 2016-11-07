@@ -42,8 +42,8 @@ var pager = function(options) {
 
 	var defaults = {
 		currentPage : 1 // 현재페이지
-		,pageSize : 5 // 페이지 사이즈 (화면 출력 페이지 수)
-		,maxListCount : 10 // (보여질)최대 리스트 수 (한페이지 출력될 항목 갯수)
+		,pageSize : 5 // 페이지 사이즈
+		,maxListCount : 10 // (보여질)최대 리스트 수
 		,startnum : 1 // 시작 글번호
 		,lastnum : 10 // 마지막 글번호
 		,totalCnt : 0 // 전체 글의 갯수.
@@ -96,7 +96,7 @@ pager.prototype = {
 		for (var j = s_page; j <= e_page; j++) {
 			if (j > totalPageCnt)    break;
 
-			var currentButton = $('<li >' + (j) + '</li>');
+			var currentButton = $('<li > <' + (j) + '> </li>');
 
 			//현재 페이지일경우 select 클래스 추가.
 			if (j == currentPage)    currentButton.addClass('selected');
@@ -261,7 +261,7 @@ function setList(start, keyword){
 				var tr = $("<tr></tr>").attr("data-isbn", data[i].isbn);
 				tr.attr("idx", i);
 
-				var img = $("<img />").attr("src", data[i].img);
+				var img = $("<img width='145' height='199' />").attr("src", data[i].img);
 				var imgTd = $("<td></td>").append(img);
 				var titleTd = $("<td></td>").text(data[i].title);
 				var authorTd = $("<td></td>").text(data[i].author);
@@ -377,7 +377,6 @@ function addBook(){
 	var titleTd = $("<td></td>");
 	var authorTd = $("<td></td>");
 	var priceTd = $("<td></td>");
-	//var delTd = $("<td></td>");
 	var delTd = $("<td></td>");
 
 	var isbnIn = $("<input />").attr("type", "text");
@@ -624,10 +623,8 @@ $(document).on('click', '#comseeBtn', function () {
 
 				var da = result[i].date.split("/")
 
-				// alert(Number(da[0])+1900+"/"+(Number(da[1])+1)+"/"+Number(da[2]));
-
 				var dateTd = $("<td></td>").text(Number(da[0])+1900+"/"+(Number(da[1])+1)+"/"+Number(da[2]));
-				var comdelBtn = $("<input >");
+				var comdelBtn = $("<input class='btn btn-success'>");
 				comdelBtn.attr("type", "button");
 				comdelBtn.attr("value", "서평삭제");
 				comdelBtn.attr("id", "comdelBtn");
@@ -658,9 +655,7 @@ $(document).on('click', '#comdelBtn', function () {
 	var id = $(this).parent().parent().attr("cid");
 
 	var author = $(this).parent().parent().find("td:nth-child(3)").text();
-	// alert(author +"  "+userId);
 
-	// alert(author!=userId)
 	if(author!=userId){
 		alert(userId+"님이 작성한 글이 아닙니다!");
 		return;
@@ -679,8 +674,6 @@ $(document).on('click', '#comdelBtn', function () {
 		},
 		success : function(result){
 
-
-			// alert(result)
 			alert("정상적으로 처리 되었습니다.");
 
 
@@ -720,7 +713,7 @@ $(document).on('click', '#comwriteBtn', function () {
 	titleTd.append(titleIn);
 	textTd.append(textIn)
 
-	var comdelBtn = $("<input class='btn btn-default'>");
+	var comdelBtn = $("<input class='btn btn-success'>");
 	comdelBtn.attr("type", "button");
 	comdelBtn.attr("value", "서평저장");
 	comdelBtn.attr("id", "comsaveBtn");
@@ -753,12 +746,11 @@ $(document).on('click', '#comsaveBtn', function () {
 	var date = d.getYear()+"/"+d.getMonth()+"/"+d.getDate();
 
 
-	var comdelBtn = $("<input >");
+	var comdelBtn = $("<input btn btn-success>");
 	comdelBtn.attr("type", "button");
 	comdelBtn.attr("value", "서평삭제");
 	comdelBtn.attr("id", "comdelBtn");
 
-	//alert(isbn+ " "+title +  text+date);
 
 	var  textTd= $(this).parent().parent().find("td:nth-child(2)")
 	var  titleTd= $(this).parent().parent().find("th")
@@ -781,7 +773,7 @@ $(document).on('click', '#comsaveBtn', function () {
 			textTd.empty();
 			textTd.text(text);
 			btnTd.empty();
-			// alert(saveBtn.val());
+
 
 			btnTd.append(comdelBtn);
 

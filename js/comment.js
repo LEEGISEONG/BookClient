@@ -16,8 +16,7 @@ $(document).ready(function() {
 		success : function(result){
 
 			if(result.ID==null){
-				userState.text("LogIn").attr("onclick","location.href='login.html'");
-				$("#dropdown-menu").hide();
+				$(location).attr("href", "index.html");
 			}else{
 
 				userState.text(result.ID);
@@ -44,7 +43,6 @@ function out() {
 		success: function (result) {
 			userState.text("LogIn").attr("onclick","location.href='login.html'");
 			$("#dropdown-menu").hide();
-			$(location).attr("href", "index.html");
 		},
 		error: function () {
 			alert("로그아웃 상태 에러 발생");
@@ -83,7 +81,7 @@ function searchComments(){
 					var da = data[i].date.split("/")
 					var dateTd = $("<td></td>").text(Number(da[0])+1900+"/"+(Number(da[1])+1)+"/"+Number(da[2]));
 
-					var delBtn = $("<input class='btn btn-default'>");
+					var delBtn = $("<input class='btn btn-danger'>");
 					delBtn.attr("type", "button");
 					delBtn.attr("value", "삭제");
 					delBtn.attr("id", "comdelBtn");
@@ -170,7 +168,7 @@ $(document).on('click', '#comTr', function () {
 	var infoTable = $("<userState class='userState userState-striped'></userState>");
 	var infoHead = $("<thead></thead>");
 	var infoTr=$("<tr></tr>")
-	var img=$("<img>")
+	var img=$("<img width='145' height='199'>")
 	var imgTh=$("<th></th>").text("이미지");
 	var titleTh=$("<th></th>").text("제목");
 	var authorTh=$("<th></th>").text("저자");

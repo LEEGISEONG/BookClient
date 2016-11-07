@@ -19,8 +19,7 @@ $(document).ready(function() {
 		success : function(result){
 
 			if(result.ID==null){
-				userState.text("LogIn").attr("onclick","location.href='login.html'");
-				$("#dropdown-menu").hide();
+				$(location).attr("href", "index.html");
 			}else{
 				userId =result.ID;
 				userState.text(userId);
@@ -119,7 +118,6 @@ $(document).on('click', '#returnBtn', function () {
 
 	var isbn = $(this).parent().parent().attr("data-isbn");
 
-	// alert(isbn+" "+userId);
 	var rentBtn = $("<input class='btn btn-default'>");
 	rentBtn.attr("type", "button");
 	rentBtn.attr("value", "대여하기");

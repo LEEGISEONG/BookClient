@@ -18,8 +18,7 @@ $(document).ready(function() {
 		success : function(result){
 
 			if(result.ID==null){
-				userState.text("LogIn").attr("onclick","location.href='login.html'");
-				$("#dropdown-menu").hide();
+                $(location).attr("href", "index.html");
 			}else{
 				userState.text(result.ID);
 			}
