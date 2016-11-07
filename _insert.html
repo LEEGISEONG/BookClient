@@ -53,24 +53,35 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">도서 관리 및 검색</a>
-            <ul id="userState"></ul>
+            <div class="navbar-collapse collapse">
+                <a class="navbar-brand" href="index.html">도서 관리 시스템</a>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" id="userState" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret">
+                                </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="rentUser.html">내 대여 목록 보기</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" onclick="out()">Logout</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
             </ul>
-            <span action="#" class="navbar-form navbar-right">
-           <!-- <input type="text" id="keyword" class="form-control" placeholder="Search..."
-                   onkeyup="searchComments()">
-
-                   -->
-          </span>
+            <span action="#" class="navbar-form navbar-right"></span>
         </div>
     </div>
 </nav>
 
-<div class="container-fluid" ondrop="dDrop()">
-    <div class="row" ondrop="dDrop()">
+<div class="container-fluid">
+    <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
 
@@ -86,25 +97,24 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">Book Add</h1>
 
-            <div class="table-responsive"  ondrop="dDrop()">
-                <table class="table table-striped"  ondrop="dDrop()">
-                    <thead>
-                    <tr>
-                        <th>이미지</th>
-                        <th>ISBN</th>
-                        <th>제목</th>
-                        <th>저자</th>
-                        <th><a href="#" onclick="mySort(this)">가격</a></th>
-                        <th>저장</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-
-
-                    </tbody>
-                </table>
-                <input type="button" onclick="addBook()" value="추가">
+            <div class="table-responsive">
+            </div>
+            <div >
+                <div ondragenter="return false"
+                     ondragover="return false"
+                     ondrop="dDrop()"
+                     id = "imgIn">
+                </div><br>
+                ISBN : <input type="text" id="isbn" placeholder="ISBN"> <br>
+                책 제목 : <input type="text" id="title" placeholder="책제목">  <br>
+                저자 : <input type="text" id="author" placeholder="저자">  <br>
+                역자 : <input type="text" id="translator" placeholder="역자">  <br>
+                출판사 : <input type="text" id="publisher" placeholder="출판사">  <br>
+                부록(예; CD 1장) : <input type="text" id="supplement" placeholder="부록">  <br>
+                책 가격 : <input type="text" id="price" placeholder="책가격"> <br>
+                출판일  : <input type="text" id="date" placeholder="출판일"> <br>
+                Page : <input type="text" id="page" placeholder="page"> <br>
+                <input type="button" class='btn btn-default' onclick="addBook()" value="추가">
             </div>
         </div>
     </div>

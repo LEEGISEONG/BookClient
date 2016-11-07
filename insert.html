@@ -82,17 +82,23 @@
 
             <div class="table-responsive">
             </div>
-
+            <div >
             <div ondragenter="return false"
                  ondragover="return false"
                  ondrop="dDrop()"
                  id = "imgIn">
             </div><br>
-            <input type="text" id="isbn" placeholder="isbn"> <br>
-            <input type="text" id="title" placeholder="책제목">  <br>
-            <input type="text" id="price" placeholder="책가격"> <br>
+            ISBN : <input type="text" id="isbn" placeholder="ISBN"> <br>
+            책 제목 : <input type="text" id="title" placeholder="책제목">  <br>
+            저자 : <input type="text" id="author" placeholder="저자">  <br>
+            역자 : <input type="text" id="translator" placeholder="역자">  <br>
+            출판사 : <input type="text" id="publisher" placeholder="출판사">  <br>
+            부록(예; CD 1장) : <input type="text" id="supplement" placeholder="부록">  <br>
+            책 가격 : <input type="text" id="price" placeholder="책가격"> <br>
+            출판일  : <input type="text" id="date" placeholder="출판일"> <br>
+            Page : <input type="text" id="page" placeholder="page"> <br>
             <input type="button" onclick="addBook()" value="추가">
-
+            </div>
         </div>
     </div>
 </div>

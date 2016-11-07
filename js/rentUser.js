@@ -1,17 +1,12 @@
+var userState;
+var userId;
+var id;
 var logout;
 var login;
-var userId;
 
 $(document).ready(function() {
-	table = $("#userState").css("overflow", "auto");
+	userState = $("#userState").css("float", "left");;
 
-	state = $("<li></li>").css("float", "left").css("color","white");
-	id = $("<li></li>").css("float", "left");
-	logout = $("<button type='button' class='btn btn-sm btn-default'>Logout</button>");
-	login = $("<button type='button'  class='btn btn-sm btn-default'>Login</button>");
-
-	logout.attr("onclick", "out()")
-	login.attr("onclick","location.href='login.html'");
 
 	$.ajax({
 		url : "http://localhost:7070/book/memberState",
@@ -24,19 +19,11 @@ $(document).ready(function() {
 		success : function(result){
 
 			if(result.ID==null){
-				state.append(login)  ;
-				table.append(state);
-				$(location).attr("href", "index.html");
+				userState.text("LogIn").attr("onclick","location.href='login.html'");
+				$("#dropdown-menu").hide();
 			}else{
-
-
-				userId=result.ID;
-				$("#whos").text(userId+"'s Book List")
-				id.text(userId);
-				state.append(id);
-				state.append(logout);
-				table.append(state);
-
+				userId =result.ID;
+				userState.text(userId);
 				searchUserRent(userId);
 			}
 		},
@@ -47,6 +34,7 @@ $(document).ready(function() {
 
 
 });
+
 function out() {
 	$.ajax({
 		url: "http://localhost:7070/book/memberLogout",
@@ -57,11 +45,8 @@ function out() {
 			id: "id"
 		},
 		success: function (result) {
-			// state.append(id);
-			id.empty();
-			state.append(login);
-			table.append(state);
-			logout.remove();
+			userState.text("LogIn").attr("onclick","location.href='login.html'");
+			$("#dropdown-menu").hide();
 			$(location).attr("href", "index.html");
 		},
 		error: function () {
@@ -72,13 +57,14 @@ function out() {
 
 function searchUserRent(user){
 
-	var useruser;
+
 	var isSearch = false;
 	if(user==null){
-		useruser =$("#keyword").val();
+		inputUser =$("#keyword").val();
+
 	}else{
-		alert("dd");
-		useruser=user;
+
+		inputUser=user;
 		isSearch=true;
 	}
 
@@ -90,10 +76,10 @@ function searchUserRent(user){
 			dataType : "jsonp",
 			jsonp : "callback",
 			data : {
-				keyword : useruser
+				keyword : inputUser
 			},
 			success : function(data){
-
+				$("#whos").text(inputUser+"'s Book List")
 				$("tbody").empty();
 				for(var i = 0 ; i < data.length ; i++) {
 
@@ -105,7 +91,7 @@ function searchUserRent(user){
 					var rentTd = $("<td></td>");
 
 
-					var returnBtn = $("<input>");
+					var returnBtn = $("<input class='btn btn-default'>");
 					returnBtn.attr("type", "button");
 					returnBtn.attr("value", "반납하기");
 					returnBtn.attr("id", "returnBtn");
@@ -134,7 +120,7 @@ $(document).on('click', '#returnBtn', function () {
 	var isbn = $(this).parent().parent().attr("data-isbn");
 
 	// alert(isbn+" "+userId);
-	var rentBtn = $("<input>");
+	var rentBtn = $("<input class='btn btn-default'>");
 	rentBtn.attr("type", "button");
 	rentBtn.attr("value", "대여하기");
 	rentBtn.attr("id", "rentBtn");
@@ -143,6 +129,10 @@ $(document).on('click', '#returnBtn', function () {
 	var nowTd = trtr.find("td:nth-child(4)");
 	var stateTd = trtr.find("td:nth-child(5)");
 
+	if(userId!=inputUser){
+		alert("다른 사람이 대여 대여한 책이라 반납할 수 없습니다.")
+		return;
+	}
 	$.ajax({
 		url: "http://localhost:7070/book/returnBook",
 		type: "GET",
@@ -169,8 +159,7 @@ $(document).on('click', '#rentBtn', function () {
 
 	var isbn = $(this).parent().parent().attr("data-isbn");
 
-	// alert(isbn+" "+userId);
-	var returnBtn = $("<input>");
+	var returnBtn = $("<input class='btn btn-default'>");
 	returnBtn.attr("type", "button");
 	returnBtn.attr("value", "대여중 반납");
 	returnBtn.attr("id", "returnBtn");

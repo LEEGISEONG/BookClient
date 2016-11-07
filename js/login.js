@@ -1,7 +1,3 @@
-/**
- * Created by CJuser on 2016-11-03.
- */
-
 function login(){
     var id = $("#inputEmail").val();
     var password = $("#inputPassword").val();

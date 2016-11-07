@@ -1,22 +1,12 @@
-var table;
-var state;
+var userState;
+// var state;
 var id;
 var logout;
 var login;
 
 $(document).ready(function() {
-    table = $("#userState");
+    userState = $("#userState");
 
-    state = $("<tr></tr>");
-    id = $("<th></th>");
-    logout = $("<button type='button' class='btn btn-sm btn-default'>Logout</button>");
-    login = $("<button type='button'  class='btn btn-sm btn-default'>Login</button>");
-
-    logout.attr("onclick", "out()")
-    login.attr("onclick","location.href='login.html'");
-
-
-    // alert("로딩 완료");
 
     $.ajax({
         url : "http://localhost:7070/book/memberState",
@@ -28,20 +18,13 @@ $(document).ready(function() {
         },
         success : function(result){
 
-            //id.text(result);
-            // alert(result.ID);
             if(result.ID==null){
-                // id.text(result);
-                // state.append(id);
-                // logout.remove();
-                state.append(login)  ;
-                table.append(state);
+                userState.text("LogIn").attr("onclick","location.href='login.html'");
+                $("#dropdown-menu").hide();
             }else{
-                // alert(result.ID);
-                id.text(result.ID);
-                state.append(id);
-                state.append(logout);
-                table.append(state);
+
+                userState.text(result.ID);
+
             }
         },
         error : function() {
@@ -52,7 +35,6 @@ $(document).ready(function() {
 
 });
 
-// $(document).on('click', '#logout', function() {
 function out() {
     $.ajax({
         url: "http://localhost:7070/book/memberLogout",
@@ -63,11 +45,8 @@ function out() {
             id: "id"
         },
         success: function (result) {
-            // state.append(id);
-            id.empty();
-            state.append(login);
-            table.append(state);
-            logout.remove();
+            userState.text("LogIn").attr("onclick","location.href='login.html'");
+            $("#dropdown-menu").hide();
             $(location).attr("href", "index.html");
         },
         error: function () {
@@ -75,4 +54,3 @@ function out() {
         }
     });
 }
-// });
