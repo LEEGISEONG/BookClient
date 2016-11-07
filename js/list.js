@@ -349,7 +349,7 @@ function setList(start, keyword){
 }
 
 function mySort() {
-	var rows = $("userState").find("tbody>tr").get();
+	var rows = $("table").find("tbody>tr").get();
 	rows.sort(function (a, b) {
 		var keyA = $(a).children("td").eq(3).text();
 		var keyB = $(b).children("td").eq(3).text();
@@ -361,7 +361,7 @@ function mySort() {
 	});
 
 	$.each(rows, function (idx, row) {
-		$("userState").children("tbody").append(row);
+		$("table").children("tbody").append(row);
 	});
 }
 
